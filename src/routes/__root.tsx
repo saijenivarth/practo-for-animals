@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -134,8 +135,15 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  const pathname = useLocation({
+    select: (location) => location.pathname,
+  });
+
+  const isAIEducationPage = pathname === "/ai-education";
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -145,15 +153,19 @@ function RootComponent() {
       >
         Skip to content
       </a>
+
       <div className="flex min-h-screen flex-col">
-        <SiteHeader />
+        {!isAIEducationPage && <SiteHeader />}
+
         <main id="main" className="flex-1">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </main>
-        <SiteFooter />
+
+        {!isAIEducationPage && <SiteFooter />}
       </div>
+
       <Toaster position="top-center" richColors closeButton />
     </QueryClientProvider>
   );
 }
+

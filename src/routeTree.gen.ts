@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AiEducationRouteImport } from './routes/ai-education'
 import { Route as FindCareRouteImport } from './routes/find-care'
 import { Route as ListYourBusinessRouteImport } from './routes/list-your-business'
 import { Route as ServicesRouteImport } from './routes/services'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiEducationRoute = AiEducationRouteImport.update({
+  id: '/ai-education',
+  path: '/ai-education',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FindCareRoute = FindCareRouteImport.update({
@@ -44,6 +50,7 @@ const ServicesRoute = ServicesRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-education': typeof AiEducationRoute
   '/find-care': typeof FindCareRoute
   '/list-your-business': typeof ListYourBusinessRoute
   '/services': typeof ServicesRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-education': typeof AiEducationRoute
   '/find-care': typeof FindCareRoute
   '/list-your-business': typeof ListYourBusinessRoute
   '/services': typeof ServicesRoute
@@ -59,19 +67,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-education': typeof AiEducationRoute
   '/find-care': typeof FindCareRoute
   '/list-your-business': typeof ListYourBusinessRoute
   '/services': typeof ServicesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/find-care' | '/list-your-business' | '/services'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/ai-education'
+    | '/find-care'
+    | '/list-your-business'
+    | '/services'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/find-care' | '/list-your-business' | '/services'
+  to:
+    | '/'
+    | '/about'
+    | '/ai-education'
+    | '/find-care'
+    | '/list-your-business'
+    | '/services'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/ai-education'
     | '/find-care'
     | '/list-your-business'
     | '/services'
@@ -80,6 +102,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AiEducationRoute: typeof AiEducationRoute
   FindCareRoute: typeof FindCareRoute
   ListYourBusinessRoute: typeof ListYourBusinessRoute
   ServicesRoute: typeof ServicesRoute
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-education': {
+      id: '/ai-education'
+      path: '/ai-education'
+      fullPath: '/ai-education'
+      preLoaderRoute: typeof AiEducationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/find-care': {
@@ -128,6 +158,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AiEducationRoute: AiEducationRoute,
   FindCareRoute: FindCareRoute,
   ListYourBusinessRoute: ListYourBusinessRoute,
   ServicesRoute: ServicesRoute,
