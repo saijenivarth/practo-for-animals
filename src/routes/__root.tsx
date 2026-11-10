@@ -143,8 +143,9 @@ function RootComponent() {
     select: (location) => location.pathname,
   });
 
-  const isAIEducationPage = pathname === "/ai-education";
-
+const isStandalonePage =
+  pathname === "/ai-education" ||
+  pathname === "/content-workflow";
   return (
     <QueryClientProvider client={queryClient}>
       <a
@@ -155,14 +156,14 @@ function RootComponent() {
       </a>
 
       <div className="flex min-h-screen flex-col">
-        {!isAIEducationPage && <SiteHeader />}
+  {!isStandalonePage && <SiteHeader />}
 
-        <main id="main" className="flex-1">
-          <Outlet />
-        </main>
+  <main id="main" className="flex-1">
+    <Outlet />
+  </main>
 
-        {!isAIEducationPage && <SiteFooter />}
-      </div>
+  {!isStandalonePage && <SiteFooter />}
+</div>
 
       <Toaster position="top-center" richColors closeButton />
     </QueryClientProvider>
